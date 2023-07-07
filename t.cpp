@@ -1,5 +1,5 @@
 // delete <mylib/tv.h> and any instance of tv::
-// the calculation takes about 3 seconds
+// the calculation takes about 8 seconds
 
 #include <cstdio>
 #include <cstdlib>
@@ -33,6 +33,7 @@ struct state25{
 	int s=0;
 	int sh=0;
 	int sv=0;
+	static const int ms=24;
 		// counter
 	int64_t r=0;							// number of solutions
 	int64_t tb=0;							// current number
@@ -115,10 +116,11 @@ struct state36{
 		0,0,0,
 		0,0,0
 	};
-		// positions
+		// position
 	int s=0;
 	int sh=0;
 	int sv=0;
+	static const int ms=35;
 		// counter
 	int64_t r=0;									// number of solutions
 	int64_t tb=0;									// current number
@@ -145,7 +147,7 @@ struct state36{
 		++s;
 		tp/=3;
 		++sv;
-		if(sv==5){
+		if(sv==6){
 			sv=0;
 			++sh;
 		}
@@ -156,17 +158,16 @@ struct state36{
 		tp*=3;
 		--sv;
 		if(sv==-1){
-			sv=4;
+			sv=5;
 			--sh;
 		}
 	};
 	inline void print_table() const{
-		printf("1 1 2 2 3 3");
-		for(int i=0;i<5;++i){
-			printf("\n%d",(i+3)/2);
-			for(int j=0;j<5;++j)
-				if(i*5+j<=s)
-					printf(" %d",m[i*5+j]);
+		for(int i=0;i<6;++i){
+			printf("%d",m[i*6]);
+			for(int j=1;j<6;++j)
+				if(i*6+j<=s)
+					printf(" %d",m[i*6+j]);
 				else printf(" *");
 		}
 		printf("\n\n");
@@ -184,7 +185,7 @@ int main(){
 			++st.m[st.s];
 			st.add();
 			if(st.check()){
-				if(st.s==24){
+				if(st.s==st.ms){
 					++st.r;
 					st.remove();
 				}
